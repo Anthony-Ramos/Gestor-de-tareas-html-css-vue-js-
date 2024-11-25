@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do App Compleja</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Gestor de Tareas</h1>
+    <center><h3>Agregar una Tarea</h3></center>
+    <!-- Formulario para añadir tareas -->
+    <div class="input-container">
+      <input type="text" v-model="newTask.text" placeholder="Nueva tarea">
+      <select v-model="newTask.category">
+        <option disabled value="">Selecciona una categoría</option>
+        <option>Trabajo</option>
+        <option>Personal</option>
+        <option>Estudio</option>
+      </select>
+      <select v-model="newTask.priority">
+        <option disabled value="">Prioridad</option>
+        <option>Alta</option>
+        <option>Media</option>
+        <option>Baja</option>
+      </select>
+      <input type="date" v-model="newTask.dueDate">
+      <button @click="addTask">Agregar</button>
+    </div>
+    <!-- Filtros -->
+    <Center><h3>Filtro de Tareas</h3></Center>
+    <div class="filters">
+      <select v-model="filter.category">
+        <option value="">Todas las categorías</option>
+        <option>Trabajo</option>
+        <option>Personal</option>
+        <option>Estudio</option>
+      </select>
+      <select v-model="filter.priority">
+        <option value="">Todas las prioridades</option>
+        <option>Alta</option>
+        <option>Media</option>
+        <option>Baja</option>
+      </select>
+    </div>
+
+    <!-- Lista de tareas -->
+    <Center><h3>Lista de Tareas</h3></Center>
+    <ul class="task-list">
+      <li v-for="(task, index) in filteredTasks" :key="index">
+        <div>
+          <strong>{{ task.text }}</strong> 
+          <em>({{ task.category }})</em> 
+          - Prioridad: {{ task.priority }} 
+          - Vence: {{ task.dueDate || 'Sin fecha' }}
+        </div>
+        <div>
+          <input type="checkbox" v-model="task.completed">
+          <button @click="deleteTask(index)">Eliminar</button>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Resumen -->
+    <div class="summary">
+      <center><h2>Resumen</h2></center>
+      <p>Total tareas: {{ tasks.length }}</p>
+      <p>Completadas: {{ completedTasks }}</p>
+      <p>Pendientes: {{ pendingTasks }}</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
